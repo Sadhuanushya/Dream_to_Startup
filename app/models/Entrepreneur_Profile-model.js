@@ -74,6 +74,6 @@ const EntrepreneurSchema=new mongoose.Schema({
         default:false
     }
 },{timestamps:true})
-const Entrepreneur=mongoose.model("Entrepreneur",EntrepreneurSchema)
+const Entrepreneur=mongoose.model("EntrepreneurProfile",EntrepreneurSchema)
 module.exports= Entrepreneur;
  

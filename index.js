@@ -9,13 +9,20 @@ require('dotenv').config();
 const port=process.env.PORT;
 const ConfigureDB=require('./config/db')
 const ctrl=require('./app/controllers/Users-controller')
+const EntrepreneurCtrl=require("./app/controllers/Entrepreneur-Controller")
+const InvesterCtrl=require("./app/controllers/Invester-controller")
 ConfigureDB()
 
 app.post('/register',ctrl.register)
 app.post('/login',ctrl.login);
-app.post('/Eprofile',ctrl.eprofile)
-app.post('/Iprofile',ctrl.iprofile)
+app.post('/profile',EntrepreneurCtrl.create)
+app.post('/profile',InvesterCtrl.create)
+app.get('/Entrepreneurs',EntrepreneurCtrl.list)
+app.get('/EntrepreneurProfile/:id',EntrepreneurCtrl.show)
+app.put('/Entrepreneur/:id',EntrepreneurCtrl.update)
+app.delete('/Entreprenuer/:id',EntrepreneurCtrl.delete)
 
 app.listen(port,()=>{
     console.log('server running on the port',port)
 })
+

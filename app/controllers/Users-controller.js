@@ -1,10 +1,6 @@
 const bcryptjs=require('bcryptjs');
 const Users=require('../models/Users-model')
 const jwt=require('jsonwebtoken')
-const EnterPreneurValidation=require('../validations/Entrepreneur_Profile-validation')
-const InvesterValidation=require('../validations/Invester_Profile-validation')
-const Entrepreneur=require('../models/Entrepreneur_Profile-model')
-const Invester=require('../models/Invester_Profile-model')
 const {RegisterValidation,LoginValidation}=require('../validations/Users-validation')
 const ctrl={};
 ctrl.register=async(req,res)=>{
@@ -58,24 +54,5 @@ ctrl.login=async(req,res)=>{
         console.log(err)
     }
 }
-ctrl.eprofile=async(req,res)=>{
-    const {error,value}=EnterPreneurValidation.validate(req.body)
-    if(error){
-        return res.json(error)
-    }
-    const profiledata=new Entrepreneur(value)
-    console.log("value",value,req.body)
-    profiledata.save()
-    res.json(profiledata)
-}
-ctrl.iprofile=async(req,res)=>{
-    const {error,value}=InvesterValidation.validate(req.body)
-    if(error){
-        return res.json(error)
-    }
-    const profile=new Invester(value)
-    console.log("value",value,req.body)
-    profile.save()
-    res.json(profile)
-}
+
 module.exports=ctrl;
