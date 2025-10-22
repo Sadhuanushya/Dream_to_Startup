@@ -4,20 +4,23 @@ const InvesterCtrl={}
 InvesterCtrl.create=async(req,res)=>{
     const {error,value}=InvesterValidation.validate(req.body)
     if(error){
-        return res.json(error)
+        return res.status(400).json(error)
     }
+    try{
     const profile=new Invester(value)
     console.log("value",value,req.body)
     profile.save()
-    res.json(profile)
+    res.status(201).json(profile)
+    }catch(err){
+        res.status(500).json(err)
+    }
 }
 InvesterCtrl.list=async(req,res)=>{
     try{
     const Investers= await Invester.find()
-    res.json(Investers)
+    res.status(200).json(Investers)
     }catch(err){
-
-        res.json(err)
+        res.status(500).json(err)
     }
 }
 InvesterCtrl.show=async(req,res)=>{
@@ -25,34 +28,38 @@ InvesterCtrl.show=async(req,res)=>{
     try{
         const InvesterProfile=await Invester.findById({_id:id})
         if(!InvesterProfile){
-            res.json("record not found")
+            res.status(404).json("record not found")
         }
-        res.json(InvesterProfile)
+        res.status(200).json(InvesterProfile)
     }
     catch(err){
-        res.json(err)
+        res.status(500).json(err)
     }
 }
 InvesterCtrl.update=async(req,res)=>{
     const id=req.params.id
+    const {error,value}=await InvesterValidation.validate(req.body)
+    if(error){
+        res.status(400).json(error)
+    }
     try{
-        const InvesterProfile =await Invester.findOneAndUpdate({_id:id},req.body,{new:true})
-        res.json(InvesterProfile)
+        const InvesterProfile =await Invester.findOneAndUpdate({_id:id},value,{new:true})
+        res.status(200).json(InvesterProfile)
     }catch(err){
-        res.json(err)
+        res.status(500).json(err)
     }
 }
 InvesterCtrl.delete=async(req,res)=>{
     const id=req.params.id
     try{
         const InvesterProfile=await Invester.findOneAndDelete({_id:id})
-        res.json(InvesterProfile)
-
+        if(!InvesterProfile){
+            res.status(404).json("record not found")
+        }
+        res.status(200).json(InvesterProfile)
     }catch(err){
-        res.json(err)
+        res.status(500).json(err)
     }
-
-
 }
 
 

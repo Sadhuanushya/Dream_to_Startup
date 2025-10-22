@@ -7,7 +7,7 @@ ctrl.register=async(req,res)=>{
     const body=req.body;
     const {error,value}=RegisterValidation.validate(body,{abortEarly:false})
     if(error){
-        return res.json({error:error})
+        return res.status(400).json({error:error})
     }
     try{
     const existingEmail=await Users.findOne({email:body.email})
@@ -23,10 +23,11 @@ ctrl.register=async(req,res)=>{
         register.role="Admin"
     }
     await register.save()
-    res.status(200).json(register)
+    res.status(201).json(register)
 
     }catch(err){
         console.log(err)
+        res.status(500).json(err)
     }
 }
 ctrl.login=async(req,res)=>{
@@ -52,6 +53,7 @@ ctrl.login=async(req,res)=>{
 
     }catch(err){
         console.log(err)
+        res.status(500).json(err)
     }
 }
 
