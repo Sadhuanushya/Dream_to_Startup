@@ -1,31 +1,33 @@
 const mongoose =require('mongoose');
-const uploadedVideoSchema=new mongoose.Schema({
-    title:String,
-    summary:String,
-    videoUrl:String,
-    requiredCapital:Number,
-    rating:Number,
-    viewCount:Number,
-},{timestamps:true})
-const PastProjectSchema=new mongoose.Schema({
-    projectname:String,
-    websiteUrl:String,
-    revenue:Number
-})
-const WorkExperienceItemSchema = new mongoose.Schema({
-    company: String,
-    position: String,
-    years: Number,
-});
 const addressSchema=new mongoose.Schema({
     address:String,
     city:String,
     state:String,
     country:String,
     pincode:Number
-})
+},{ _id: false })
+const EducationSchema=mongoose.Schema({
+    institutionName:String,
+    course:String,
+    year:Number
+},{ _id: false })
+const WorkExperienceItemSchema = new mongoose.Schema({
+    company: String,
+    position: String,
+    years: Number,
+},{ _id: false });
+const PastProjectSchema=new mongoose.Schema({
+    projectname:String,
+    websiteUrl:String,
+    revenue:Number
+},{ _id: false })
+
 
 const EntrepreneurSchema=new mongoose.Schema({
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+    },
     fullname:String,
     email:String,
     phone:String,
@@ -35,26 +37,12 @@ const EntrepreneurSchema=new mongoose.Schema({
     },
     bio:String,
     linkdinUrl:String,
-    projectStage: {
-        type: new mongoose.Schema({
-            projectStage: {
-                type: String,
-                enum: ['Idea', 'Launched'],
-                required: true
-            },
-            projectname: String,
-            aboutProject: String, 
-            targetmarket: String, 
-            websiteUrl: String,   
-            revenue: Number       
-        })
-    
-    },
-    education:{
-        type:String
-    },
     skills:{
         type:[String],
+        default:[]
+    },
+    education:{
+        type:[EducationSchema],
         default:[]
     },
     workExperience: {
@@ -65,15 +53,18 @@ const EntrepreneurSchema=new mongoose.Schema({
         type:[PastProjectSchema],
         default:[]
     },
-    uploadedVideo:{
-        type:[uploadedVideoSchema],
-        default:[]
+    identityDocument:String,
+    BusinessRegistrationDocument:String,
+    projectVideo:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"ProjectVideo"
     },
+     //verification Status
     isVerified:{
         type:Boolean,
         default:false
     }
 },{timestamps:true})
-const Entrepreneur=mongoose.model("EntrepreneurProfile",EntrepreneurSchema)
+const Entrepreneur=mongoose.model("Entrepreneur",EntrepreneurSchema)
 module.exports= Entrepreneur;
  

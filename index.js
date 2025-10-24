@@ -15,12 +15,18 @@ ConfigureDB()
 
 app.post('/register',ctrl.register)
 app.post('/login',ctrl.login);
+
 app.post('/EntrepreneurProfile',AuthenticateUser,EntrepreneurCtrl.create)
-app.post('/InvesterProfile',AuthenticateUser,InvesterCtrl.create)
 app.get('/Entrepreneurs',AuthenticateUser,EntrepreneurCtrl.list)
 app.get('/EntrepreneurProfile/:id',AuthenticateUser,EntrepreneurCtrl.show)
 app.put('/Entrepreneur/:id',AuthenticateUser,EntrepreneurCtrl.update)
 app.delete('/Entreprenuer/:id',AuthenticateUser,AuthorizeUser(["admin"]),EntrepreneurCtrl.delete)
+
+app.post('/InvesterProfile',AuthenticateUser,InvesterCtrl.create)
+app.get('/Investers',AuthenticateUser,InvesterCtrl.list)
+app.get('/InvesterProfile/:id',AuthenticateUser,InvesterCtrl.show)
+app.put('/Invester/:id',AuthenticateUser,InvesterCtrl.update)
+app.delete('/Invester/:id',AuthenticateUser,AuthorizeUser(["admin"]),InvesterCtrl.delete)
 
 app.listen(port,()=>{
     console.log('server running on the port',port)

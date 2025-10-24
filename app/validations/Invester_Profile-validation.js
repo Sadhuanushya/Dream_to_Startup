@@ -10,26 +10,21 @@ const pastInvestmentSchema=joi.object({
     projectName:joi.string().trim().required(),
     investment:joi.number().required()
 })
-const ApplicationSchema=joi.object({
-        EntrepreneurId:joi.string(),
-        AppliedAt:joi.date()
+const SectorSchema=joi.object({
+    sector:joi.string().trim().min(3).max(30).required(),
+    description:joi.string().trim().min(10).max(100).required(),
+    targetInvestment:joi.number().min(1000).required()
 })
-const postSchema=joi.object({
-    title:joi.string().min(3).max(50).trim().required(),
-    prefferedSector:joi.string().trim().min(3).max(50).required(),
-    description:joi.string().max(500).trim().required(),
-    targetInvestment:joi.number().required(),
-    applications:joi.array().items(ApplicationSchema)
-})
-
 const InvesterValidation=joi.object({
     
     fullName:joi.string().trim().min(3).max(30).required(),
     email:joi.string().email().required(),
-    officeLocation:officeLocationShema.required(),
+    bio:joi.string().min(10).max(500).required(),
     linkedinUrl:joi.string().max(70).required(),
-    bio:joi.string().max(500).required(),
+    officeLocation:officeLocationShema.required(),
+    preferredSector:joi.array().items(SectorSchema),
     pastInvestment:joi.array().items(pastInvestmentSchema).max(10).min(0).required(),
-    post:joi.array().items(postSchema).min(0).max(5).required()
+    verificationDocument:joi.string().uri().min(10).max(40).required()
+    
 })
 module.exports=InvesterValidation;

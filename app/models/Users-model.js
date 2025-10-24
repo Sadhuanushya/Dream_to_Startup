@@ -20,5 +20,5 @@ const RegisterSchema=mongoose.Schema({
         default:true
     }
 },{timestamps:true});
-const Users=mongoose.model('Users',RegisterSchema)
-module.exports=Users;
+const User=mongoose.model('User',RegisterSchema)
+module.exports=User;
