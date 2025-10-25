@@ -23,7 +23,7 @@ EntrepreneurCtrl.list=async(req,res)=>{
 EntrepreneurCtrl.show=async(req,res)=>{
     const id=req.params.id
     try{
-        const EntrepreneurProfile=await Entrepreneur.findById({_id:id})
+        const EntrepreneurProfile=await Entrepreneur.findOne({_id:id})
         if(!EntrepreneurProfile){
             res.json("record not found")
         }

@@ -20,7 +20,7 @@ ctrl.register=async(req,res)=>{
     register.password=hash;
     const count= await Users.countDocuments();
     if(count==0){
-        register.role="Admin"
+        register.role="admin"
     }
     await register.save()
     res.status(201).json(register)
