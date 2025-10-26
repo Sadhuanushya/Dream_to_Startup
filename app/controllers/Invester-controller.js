@@ -7,6 +7,10 @@ InvesterCtrl.create=async(req,res)=>{
         return res.status(400).json(error)
     }
     try{
+    const Existingemail=await findOne({email:value.email})
+        if(Existingemail){
+           return  res.status(404).json({error:"An account with this email address already exists"})
+        }
     const profile=new Invester(value)
     console.log("value",value,req.body)
     profile.save()

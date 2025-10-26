@@ -32,7 +32,7 @@ ctrl.register=async(req,res)=>{
 }
 ctrl.login=async(req,res)=>{
     const body=req.body;
-    const{error,value}=LoginValidation.validate(req.body,{abortEarly:false})
+    const{error,value}=LoginValidation.validate(body,{abortEarly:false})
     if(error){
         return res.status(400).json(error)
     }
